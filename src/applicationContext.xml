@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:batch="http://www.springframework.org/schema/batch" xmlns:si="http://www.springframework.org/schema/integration"
+       xmlns:file="http://www.springframework.org/schema/integration/file"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.2.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+                           http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-3.0.xsd
+                           http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+                           ">
+
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" primary="true"
+          destroy-method="close">
+        <property name="driverClassName" value="@{spring.datasource.driver-class-name}" />
+        <property name="url" value="@{spring.datasource.url}" />
+        <property name="username" value="@{spring.datasource.user}" />
+        <property name="password" value="@{spring.datasource.password}" />
+        <property name="initialSize" value="0" />
+        <property name="maxActive" value="10" />
+        <property name="maxIdle" value="2" />
+        <property name="minIdle" value="0" />
+        <property name="timeBetweenEvictionRunsMillis" value="180000" />
+        <property name="minEvictableIdleTimeMillis" value="1200000" />
+        <property name="maxWait" value="90000" />
+        <property name="connectionProperties" value="fixedString=true" />
+    </bean>
+
+
+    <bean id="CommonDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close" >
+        <property name="driverClassName" value="@{spring.datasource.driver-class-name}" />
+        <property name="url" value="@{spring.datasource.common.url}" />
+        <property name="username" value="@{spring.datasource.user}" />
+        <property name="password" value="@{spring.datasource.password}" />
+        <property name="initialSize" value="0" />
+        <property name="maxActive" value="10" />
+        <property name="maxIdle" value="2" />
+        <property name="minIdle" value="0" />
+        <property name="timeBetweenEvictionRunsMillis" value="180000" />
+        <property name="minEvictableIdleTimeMillis" value="1200000" />
+        <property name="maxWait" value="90000" />
+        <property name="connectionProperties" value="fixedString=true" />
+    </bean>
+
+
+    <!--    <tx:annotation-driven transaction-manager="transactionManager"/>
+        <bean id="transactionManagerCommon"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager" primary="true">
+            <property name="dataSource" ref="CommonDataSource"/>
+        </bean>-->
+<!--
+
+    <bean id="sqlSessionFactoryCommon" class="org.mybatis.spring.SqlSessionFactoryBean" name="sqlSessionFactoryCommon">
+        <property name="dataSource" ref="CommonDataSource"></property>
+        <property name="mapperLocations" value="classpath:com/lmig/ci/atwork/cru/star/persistence/mapper/common/*.xml"></property>
+        <property name="configLocation" value="classpath:com/lmig/ci/atwork/cru/star/persistence/mybatis-config.xml"/>
+    </bean>
+
+    <bean id="sqlSessionFactoryDocs" class="org.mybatis.spring.SqlSessionFactoryBean" name="sqlSessionFactoryDocs"  primary="true">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:com/lmig/ci/atwork/cru/star/persistence/mapper/docs/*.xml"></property>
+        <property name="configLocation" value="classpath:com/lmig/ci/atwork/cru/star/persistence/mybatis-config.xml"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.lmig.ci.atwork.cru.star.persistence.mapper.docs" />
+
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryDocs" />
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.lmig.ci.atwork.cru.star.persistence.mapper.common"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryCommon"/>
+    </bean>
+
+-->
+    <bean id="jdbcCommon" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="CommonDataSource"/>
+    </bean>
+    <!--  <bean id="transactionManager" primary="true"
+            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+          <property name="dataSource" ref="dataSource" />
+      </bean>
+
+
+      <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" primary="true">
+          <constructor-arg index="0" ref="sqlSessionFactoryCommon" />
+      </bean>
+
+
+      <bean id="sqlSession1" class="org.mybatis.spring.SqlSessionTemplate">
+          <constructor-arg index="0" ref="sqlSessionFactoryDocs" />
+      </bean>
+  -->
+    <import resource="restAPI-security.xml"/>
+</beans>

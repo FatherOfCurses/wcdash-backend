@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Liquibase Change Log http://www.liquibase.org/documentation/index.html -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="Principe">
+        <sql>
+            CREATE SCHEMA dbo;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Principe">
+        <sql>
+            CREATE TABLE dbo.bpaworkqueueitem (
+            ID VARCHAR(100) NOT NULL,
+            QUEUEID VARCHAR(100) NOT NULL,
+            KEYVALUE VARCHAR(100) NOT NULL,
+            STATUS VARCHAR(100) NOT NULL,
+            ATTEMPT INT NULL,
+            LOADED TIMESTAMP NOT NULL,
+            COMPLETED TIMESTAMP NOT NULL,
+            EXCEPTION TIMESTAMP NULL,
+            EXCEPTIONREASON VARCHAR(200) NULL,
+            DEFERRED TIMESTAMP NULL,
+            WORKTIME INT NULL,
+            QUEUEIDENT INT NOT NULL,
+            IDENT VARCHAR(100) NOT NULL,
+            SESSIONID VARCHAR(100) NULL,
+            PRIORITY INT NOT NULL,
+            PREVWORKTIME INT NOT NULL,
+            ATTEMPTWORKTIME INT NOT NULL,
+            FINISHED TIMESTAMP NULL,
+            EXCEPTIONREASONVARCHAR VARCHAR(100) NOT NULL,
+            EXCEPTIONREASONTAG VARCHAR(100) NOT NULL,
+            ENCRYPTID VARCHAR(100) NOT NULL,
+            LASTUPDATED TIMESTAMP NULL,
+            DATA VARCHAR(2000) NOT NULL,
+            PRIMARY KEY (ID));
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="Principe">
+        <sql>
+            INSERT INTO dbo.bpaworkqueueitem (
+            ID,
+            QUEUEID,
+            KEYVALUE,
+            STATUS,
+            ATTEMPT,
+            LOADED,
+            COMPLETED,
+            EXCEPTION,
+            EXCEPTIONREASON,
+            DEFERRED,
+            WORKTIME,
+            QUEUEIDENT,
+            IDENT,
+            SESSIONID,
+            PRIORITY,
+            PREVWORKTIME,
+            ATTEMPTWORKTIME,
+            FINISHED,
+            EXCEPTIONREASONVARCHAR,
+            EXCEPTIONREASONTAG,
+            ENCRYPTID,
+            LASTUPDATED,
+            DATA)
+            VALUES (
+            '5856E79D-88F4-428B-B328-004136CE750F',
+            '088FE57F-FE28-4014-B5C6-ABDBE3A51383',
+            'WC116-A52881',
+            'Completed',
+            1,
+            parsedatetime('2018-06-26 11:04:58.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            parsedatetime('2018-06-26 11:13:31.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            parsedatetime('2018-06-26 11:13:31.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            'exceptionreason',
+            parsedatetime('2018-06-26 11:13:31.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            513,
+            29400,
+            '1',
+            'CB8EF759-9F1B-41C7-8E2F-3851BB10BFA8',
+            0,
+            0,
+            513,
+            parsedatetime('2018-06-26 11:13:31.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            'exceptionreason2',
+            'exceptiontag',
+            'encryptionid',
+            parsedatetime('2018-06-26 11:13:31.690', 'yyyy-MM-dd hh:mm:ss.SS'),
+            'stupidxmltext'
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

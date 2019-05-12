@@ -1,2 +1,0 @@
-id	queueid	keyvalue	status	attempt	loaded	completed	exception	deferred	worktime	queueident	ident	sessionid	priority	prevworktime	attemptworktime	finished	exceptionreasonvarchar	exceptionreasontag	encryptid	lastupdated
-77CE9120-F5B2-4F6F-9E42-51274132F2CD	BA81B920-434A-47D9-940B-9E578D01577C			1	2017-09-26 16:15:35	(null)	2017-09-26 16:31:53	(null)	573	3	2984	6CD049FA-776B-4DF0-8407-C297DEE7C0B2	0	0	573	2017-09-26 16:31:53	Automatically set exception at CleanUp	Exception: Automatically set exception at CleanUp	(null)	2017-09-26 16:31:53

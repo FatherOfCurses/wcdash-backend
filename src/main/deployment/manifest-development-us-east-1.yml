@@ -1,18 +1,13 @@
 applications:
   - name: wcdashdatasource
     routes:
-      - route: wcdashdatasource-development.us-east-1.np.paas.lmig.com
+      - route:
     buildpack: java_current
     instances: 1
     memory: 1024M
     timeout: 180
     env:
       SPRING_PROFILES_ACTIVE: development
-      COM.LMIG.ENVIRONMENT: development
-      NEW_RELIC_APP_NAME: wcdashdatasource
-      API_KEY: ${secret.wcdashdatasource.apiKey}
-      WCDASHDATASOURCE_PASSWORD: ${secret.wcdashdatasource.password}
-      WCDASHDATASOURCE_USERNAME: ${secret.wcdashdatasource.username}
     services:
       - newrelic
       - logging

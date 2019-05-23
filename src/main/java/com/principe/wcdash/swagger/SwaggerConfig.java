@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class SwaggerConfig {
         private static final String API_REGEX = "/api.*";
         public static final int CURRENT_YEAR = LocalDate.now().getYear();
-        public static final String COPYRIGHT = String.format("Copyright (C) %d, Liberty Mutual Insurance", CURRENT_YEAR);
+        public static final String COPYRIGHT = String.format("Copyright (C) %d, Humber Consulting", CURRENT_YEAR);
 
 
         @Value("${spring.application.name}")
@@ -48,8 +48,8 @@ public class SwaggerConfig {
          */
         public ApiInfo swaggerApiInfo(String title, String description) {
                 return new ApiInfoBuilder()
-                        .title("Blue Prism Reporting API")
-                        .description("Serving data from Blue Prism transaction database for reporting purposes.")
+                        .title("RPA Reporting API")
+                        .description("Serving data from Robotics transaction database for reporting purposes.")
                         .version("1.0.0")
                         .license(COPYRIGHT)
 

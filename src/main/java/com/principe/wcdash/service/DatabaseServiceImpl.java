@@ -1,10 +1,9 @@
-package com.principe.wcdash.service.impl;
+package com.principe.wcdash.service;
 
 import com.principe.wcdash.domain.MinimalTrans;
 import com.principe.wcdash.domain.FullTransDetails;
-import com.principe.wcdash.repository.CompletionRepository;
-import com.principe.wcdash.repository.TransactionRepository;
-import com.principe.wcdash.service.DatabaseService;
+import com.principe.wcdash.daos.CompletionDao;
+import com.principe.wcdash.daos.TransactionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,40 +14,40 @@ import java.util.stream.Collectors;
 public class DatabaseServiceImpl implements DatabaseService {
 
         @Autowired
-        TransactionRepository transactionRepository;
+        TransactionDao transactionDao;
 
         @Autowired
-        CompletionRepository completionRepository;
+        CompletionDao completionDao;
 
         // TODO: Error handling for Database calls?
         @Override
                 public FullTransDetails getTrans(String transIdFromDB) {
-                return transactionRepository.findById(transIdFromDB).orElse(new FullTransDetails());
+                return transactionDao.findById(transIdFromDB).orElse(new FullTransDetails());
         }
 
         @Override
                 public List<FullTransDetails> listAllTrans() {
-                return transactionRepository.findAll();
+                return transactionDao.findAll();
         }
 
         @Override public void writeTransToDatabase(FullTransDetails writeTrans) {
-                transactionRepository.save(writeTrans);
+                transactionDao.save(writeTrans);
         }
 
         @Override public MinimalTrans getMinimalTrans(String transIdFromDB) {
-                return completionRepository.findById(transIdFromDB).orElse(new MinimalTrans());
+                return completionDao.findById(transIdFromDB).orElse(new MinimalTrans());
         }
 
         @Override public List<MinimalTrans> listAllMinimalTrans() {
-                completionRepository.findAll();
-                List<MinimalTrans> scrubbedList = (completionRepository.findAll()).stream()
+                completionDao.findAll();
+                List<MinimalTrans> scrubbedList = (completionDao.findAll()).stream()
                         .filter(x -> x.getStatustext()!="")
                         .collect(Collectors.toList());
                 return scrubbedList;
         }
 
         @Override public void writeMinimalTransToDatabase(MinimalTrans writeMinimal) {
-                completionRepository.save(writeMinimal);
+                completionDao.save(writeMinimal);
         }
 
 }

@@ -3,34 +3,17 @@ package com.principe.wcdash.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(schema = "dbo", name = "bpaworkqueueitem")
-
 public class MinimalTrans {
-        @Id
-        @Column(name = "id") // 1
+
                 String transIdFromDB;
-
-        @Column(name = "keyvalue") // 3
                 String claimnumber;
-
-        @Column(name = "status") // 4
                 String statustext;
-
-        @Column(name = "finished")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
                 LocalDateTime transactionCompleteTime;
-
-        @Column(name = "exceptionreasonvarchar") // 19
                 String exceptionReason2;
-
-        @Column(name = "worktime") // 11
                 int workTimeInSecs;
-
-        @Column(name = "data") // 23
                 String xmldata;
 
         public String getTransIdFromDB() {

@@ -6,49 +6,49 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Customer {
 
-        int indexNumber;
+    int indexNumber;
+    String customerName;
+    int exceptionCount;
 
-        String customerName;
+    public String getCustomerName() {
+        return customerName;
+    }
 
-        int exceptionCount;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
-        public String getCustomerName() {
-                return customerName;
-        }
+    public int getExceptionCount() {
+        return exceptionCount;
+    }
 
-        public void setCustomerName(String customerName) {
-                this.customerName = customerName;
-        }
+    public void setExceptionCount(int exceptionCount) {
+        this.exceptionCount = exceptionCount;
+    }
 
-        public int getExceptionCount() {
-                return exceptionCount;
-        }
+    public int getIndexNumber() {
+        return indexNumber;
+    }
 
-        public void setExceptionCount(int exceptionCount) {
-                this.exceptionCount = exceptionCount;
-        }
+    public void setIndexNumber(int indexNumber) {
+        this.indexNumber = indexNumber;
+    }
 
-        public int getIndexNumber() {
-                return indexNumber;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
 
-        public void setIndexNumber(int indexNumber) {
-                this.indexNumber = indexNumber;
-        }
+        if (!(o instanceof Customer))
+            return false;
 
-        @Override public boolean equals(Object o) {
-                if (this == o)
-                        return true;
+        Customer customer = (Customer) o;
 
-                if (!(o instanceof Customer))
-                        return false;
+        return new EqualsBuilder().append(getExceptionCount(), customer.getExceptionCount()).append(getCustomerName(), customer.getCustomerName()).isEquals();
+    }
 
-                Customer customer = (Customer) o;
-
-                return new EqualsBuilder().append(getExceptionCount(), customer.getExceptionCount()).append(getCustomerName(), customer.getCustomerName()).isEquals();
-        }
-
-        @Override public int hashCode() {
-                return new HashCodeBuilder(17, 37).append(getCustomerName()).append(getExceptionCount()).toHashCode();
-        }
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(getCustomerName()).append(getExceptionCount()).toHashCode();
+    }
 }

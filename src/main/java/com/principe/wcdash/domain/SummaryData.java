@@ -12,11 +12,8 @@ public class SummaryData {
         //TODO: Maybe parse out month, date, day of week, week number here?
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")// 7
         LocalDate summaryDate;
-
         double dailyAverageWorkTime;
-
         long numberOfTransactions;
-
         BigDecimal percentOfTotal;
 
         public LocalDate getSummaryDate() {

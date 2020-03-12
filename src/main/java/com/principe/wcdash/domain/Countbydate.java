@@ -6,38 +6,40 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.time.LocalDate;
 
 public class Countbydate {
-        LocalDate transactionDate;
-        int transactionCount;
+    LocalDate transactionDate;
+    int transactionCount;
 
-        public LocalDate getTransactionDate() {
-                return transactionDate;
-        }
+    public LocalDate getTransactionDate() {
+        return transactionDate;
+    }
 
-        public void setTransactionDate(LocalDate transactionDate) {
-                this.transactionDate = transactionDate;
-        }
+    public void setTransactionDate(LocalDate transactionDate) {
+        this.transactionDate = transactionDate;
+    }
 
-        public int getTransactionCount() {
-                return transactionCount;
-        }
+    public int getTransactionCount() {
+        return transactionCount;
+    }
 
-        public void setTransactionCount(int transactionCount) {
-                this.transactionCount = transactionCount;
-        }
+    public void setTransactionCount(int transactionCount) {
+        this.transactionCount = transactionCount;
+    }
 
-        @Override public boolean equals(Object o) {
-                if (this == o)
-                        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
 
-                if (!(o instanceof Countbydate))
-                        return false;
+        if (!(o instanceof Countbydate))
+            return false;
 
-                Countbydate that = (Countbydate) o;
+        Countbydate that = (Countbydate) o;
 
-                return new EqualsBuilder().append(getTransactionCount(), that.getTransactionCount()).append(getTransactionDate(), that.getTransactionDate()).isEquals();
-        }
+        return new EqualsBuilder().append(getTransactionCount(), that.getTransactionCount()).append(getTransactionDate(), that.getTransactionDate()).isEquals();
+    }
 
-        @Override public int hashCode() {
-                return new HashCodeBuilder(17, 37).append(getTransactionDate()).append(getTransactionCount()).toHashCode();
-        }
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(getTransactionDate()).append(getTransactionCount()).toHashCode();
+    }
 }

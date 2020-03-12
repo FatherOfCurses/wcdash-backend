@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
-
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +24,6 @@ public class WcdashApplicationTests {
 
         //TODO: More test coverage on transaction retrieval
         @Test
-        @Transactional
         public void ICanRetrieveASingleTransactionFromDatabase() {
                 FullTransDetails expectedTrans = TestHelper.createTrans(1);
                 databaseService.writeTransToDatabase(expectedTrans);
@@ -36,7 +33,6 @@ public class WcdashApplicationTests {
         }
 
         @Test
-        @Transactional
         public void ICanRetrieveAllTransactionsFromDatabase() {
                 ArrayList<FullTransDetails> expectedTransArray = new ArrayList<>();
                 ArrayList<FullTransDetails> actualTransArray = new ArrayList<>();
@@ -51,7 +47,6 @@ public class WcdashApplicationTests {
                 assertEquals(expectedTransArray, actualTransArray);
         }
         @Test
-        @Transactional
         public void ICanRetrieveASingleMinimalTransactionFromDatabase() {
                 MinimalTrans expectedMinimal = TestHelper.createMinimalTrans(1);
                 databaseService.writeMinimalTransToDatabase(expectedMinimal);
@@ -61,7 +56,6 @@ public class WcdashApplicationTests {
         }
 
         @Test
-        @Transactional
         public void ICanRetrieveAllMinimalTransactionsFromDatabase() {
                 ArrayList<MinimalTrans> expectedMinimalArray = new ArrayList<>();
                 ArrayList<MinimalTrans> actualMinimalArray = new ArrayList<>();

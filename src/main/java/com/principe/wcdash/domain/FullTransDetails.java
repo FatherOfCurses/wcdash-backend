@@ -4,276 +4,230 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
-@Entity
-@Table(schema = "dbo", name = "bpaworkqueueitem")
-
 public class FullTransDetails {
-        @Id
-        @Column(name = "id") // 1
-        String transIdFromDB;
 
-        String queueid; // 2
-
-        @Column(name = "keyvalue") // 3
-        String claimnumber;
-
-        @Column(name = "status") // 4
-        String statustext;
-
-        int attempt; // 5
-
-        @Column(name = "loaded") // 6
-        // @JsonFormat annotation allows formatting of date.  Otherwise date comes out as a number of sub-objects separated by commas
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
-        LocalDateTime transactionLoadTime;
-
-        @Column(name = "completed") // 7
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
-        LocalDateTime transactionCompleteTime;
-
-        @Column(name = "exception") // 8
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
-        LocalDateTime transactionExceptionTime;
-
-        String exceptionreason; // 9
-
-        @Column(name = "deferred") // 10
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
-        LocalDateTime transactionDeferTime;
-
-        @Column(name = "worktime") // 11
-        int workTimeInSecs;
-
-        int queueident; // 12
-
-        @Column(name = "ident") // 13
-        String ident;
-
-        @Column(name = "sessionid") // 14
-        String sessionId;
-
-        int priority; // 15
-
-        @Column(name = "prevworktime") // 16
-        int previousWorkTimeInSecs;
-
-        @Column(name = "attemptworktime") // 17
-        int attemptedWorkTimeInSecs;
-
-        @Column(name = "finished") // 18
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-        LocalDateTime transactionFinishTime;
-
-        @Column(name = "exceptionreasonvarchar") // 19
-        String exceptionReason2;
-
-        @Column(name = "exceptionreasontag") // 20
-        String exceptionTag;
-
-        @Column(name = "encryptid") // 21
-        String encryptionId;
-
-        @Column(name = "lastupdated")
-
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 22
-        LocalDateTime lastTransactionUpdateTime;
-
-        @Column(name = "data") // 23
-        String xmldata;
-
-        public String getTransIdFromDB() {
-                return transIdFromDB;
-        }
-
-        public void setTransIdFromDB(String transIdFromDB) {
-                this.transIdFromDB = transIdFromDB;
-        }
-
-        public String getQueueid() {
-                return queueid;
-        }
-
-        public void setQueueid(String queueid) {
-                this.queueid = queueid;
-        }
-
-        public String getClaimnumber() {
-                return claimnumber;
-        }
-
-        public void setClaimnumber(String claimnumber) {
-                this.claimnumber = claimnumber;
-        }
-
-        public String getStatustext() {
-                return statustext;
-        }
-
-        public void setStatustext(String statustext) {
-                this.statustext = statustext;
-        }
-
-        public int getAttempt() {
-                return attempt;
-        }
-
-        public void setAttempt(int attempt) {
-                this.attempt = attempt;
-        }
-
-        public LocalDateTime getTransactionLoadTime() {
-                return transactionLoadTime;
-        }
-
-        public void setTransactionLoadTime(LocalDateTime transactionLoadTime) {
-                this.transactionLoadTime = transactionLoadTime;
-        }
-
-        public LocalDateTime getTransactionCompleteTime() {
-                return transactionCompleteTime;
-        }
-
-        public void setTransactionCompleteTime(LocalDateTime transactionCompleteTime) {
-                this.transactionCompleteTime = transactionCompleteTime;
-        }
-
-        public LocalDateTime getTransactionExceptionTime() {
-                return transactionExceptionTime;
-        }
-
-        public void setTransactionExceptionTime(LocalDateTime transactionExceptionTime) {
-                this.transactionExceptionTime = transactionExceptionTime;
-        }
-
-        public String getExceptionreason() {
-                return exceptionreason;
-        }
-
-        public void setExceptionreason(String exceptionreason) {
-                this.exceptionreason = exceptionreason;
-        }
-
-        public LocalDateTime getTransactionDeferTime() {
-                return transactionDeferTime;
-        }
-
-        public void setTransactionDeferTime(LocalDateTime transactionDeferTime) {
-                this.transactionDeferTime = transactionDeferTime;
-        }
-
-        public int getWorkTimeInSecs() {
-                return workTimeInSecs;
-        }
-
-        public void setWorkTimeInSecs(int workTimeInSecs) {
-                this.workTimeInSecs = workTimeInSecs;
-        }
-
-        public String getXmldata() {
-                return xmldata;
-        }
-
-        public void setXmldata(String xmldata) {
-                this.xmldata = xmldata;
-        }
-
-        public int getQueueident() {
-                return queueident;
-        }
-
-        public void setQueueident(int queueident) {
-                this.queueident = queueident;
-        }
-
-        public String getIdent() {
-                return ident;
-        }
-
-        public void setIdent(String ident) {
-                this.ident = ident;
-        }
-
-        public String getSessionId() {
-                return sessionId;
-        }
-
-        public void setSessionId(String sessionId) {
-                this.sessionId = sessionId;
-        }
-
-        public int getPriority() {
-                return priority;
-        }
-
-        public void setPriority(int priority) {
-                this.priority = priority;
-        }
-
-        public int getPreviousWorkTimeInSecs() {
-                return previousWorkTimeInSecs;
-        }
-
-        public void setPreviousWorkTimeInSecs(int previousWorkTimeInSecs) {
-                this.previousWorkTimeInSecs = previousWorkTimeInSecs;
-        }
-
-        public int getAttemptedWorkTimeInSecs() {
-                return attemptedWorkTimeInSecs;
-        }
-
-        public void setAttemptedWorkTimeInSecs(int attemptedWorkTimeInSecs) {
-                this.attemptedWorkTimeInSecs = attemptedWorkTimeInSecs;
-        }
-
-        public LocalDateTime getTransactionFinishTime() {
-                return transactionFinishTime;
-        }
-
-        public void setTransactionFinishTime(LocalDateTime transactionFinishTime) {
-                this.transactionFinishTime = transactionFinishTime;
-        }
-
-        public String getExceptionReason2() {
-                return exceptionReason2;
-        }
-
-        public void setExceptionReason2(String exceptionReason2) {
-                this.exceptionReason2 = exceptionReason2;
-        }
-
-        public String getExceptionTag() {
-                return exceptionTag;
-        }
-
-        public void setExceptionTag(String exceptionTag) {
-                this.exceptionTag = exceptionTag;
-        }
-
-        public String getEncryptionId() {
-                return encryptionId;
-        }
-
-        public void setEncryptionId(String encryptionId) {
-                this.encryptionId = encryptionId;
-        }
-
-        public LocalDateTime getLastTransactionUpdateTime() {
-                return lastTransactionUpdateTime;
-        }
-
-        public void setLastTransactionUpdateTime(LocalDateTime lastTransactionUpdateTime) {
-                this.lastTransactionUpdateTime = lastTransactionUpdateTime;
-        }
-
-        @Override
-        public String toString() {
-                return ReflectionToStringBuilder.reflectionToString(this);
-        }
+    String transIdFromDB;
+    String queueid; // 2
+    String claimnumber;
+    String statustext;
+    int attempt; // 5
+    // @JsonFormat annotation allows formatting of date.  Otherwise date comes out as a number of sub-objects separated by commas
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
+            LocalDateTime transactionLoadTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
+            LocalDateTime transactionCompleteTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
+            LocalDateTime transactionExceptionTime;
+    String exceptionreason; // 9
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 7
+            LocalDateTime transactionDeferTime;
+    int workTimeInSecs;
+    int queueident; // 12
+    String ident;
+    String sessionId;
+    int priority; // 15
+    int previousWorkTimeInSecs;
+    int attemptedWorkTimeInSecs;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    LocalDateTime transactionFinishTime;
+    String exceptionReason2;
+    String exceptionTag;
+    String encryptionId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")// 22
+            LocalDateTime lastTransactionUpdateTime;
+    String xmldata;
+
+    public String getTransIdFromDB() {
+        return transIdFromDB;
+    }
+
+    public void setTransIdFromDB(String transIdFromDB) {
+        this.transIdFromDB = transIdFromDB;
+    }
+
+    public String getQueueid() {
+        return queueid;
+    }
+
+    public void setQueueid(String queueid) {
+        this.queueid = queueid;
+    }
+
+    public String getClaimnumber() {
+        return claimnumber;
+    }
+
+    public void setClaimnumber(String claimnumber) {
+        this.claimnumber = claimnumber;
+    }
+
+    public String getStatustext() {
+        return statustext;
+    }
+
+    public void setStatustext(String statustext) {
+        this.statustext = statustext;
+    }
+
+    public int getAttempt() {
+        return attempt;
+    }
+
+    public void setAttempt(int attempt) {
+        this.attempt = attempt;
+    }
+
+    public LocalDateTime getTransactionLoadTime() {
+        return transactionLoadTime;
+    }
+
+    public void setTransactionLoadTime(LocalDateTime transactionLoadTime) {
+        this.transactionLoadTime = transactionLoadTime;
+    }
+
+    public LocalDateTime getTransactionCompleteTime() {
+        return transactionCompleteTime;
+    }
+
+    public void setTransactionCompleteTime(LocalDateTime transactionCompleteTime) {
+        this.transactionCompleteTime = transactionCompleteTime;
+    }
+
+    public LocalDateTime getTransactionExceptionTime() {
+        return transactionExceptionTime;
+    }
+
+    public void setTransactionExceptionTime(LocalDateTime transactionExceptionTime) {
+        this.transactionExceptionTime = transactionExceptionTime;
+    }
+
+    public String getExceptionreason() {
+        return exceptionreason;
+    }
+
+    public void setExceptionreason(String exceptionreason) {
+        this.exceptionreason = exceptionreason;
+    }
+
+    public LocalDateTime getTransactionDeferTime() {
+        return transactionDeferTime;
+    }
+
+    public void setTransactionDeferTime(LocalDateTime transactionDeferTime) {
+        this.transactionDeferTime = transactionDeferTime;
+    }
+
+    public int getWorkTimeInSecs() {
+        return workTimeInSecs;
+    }
+
+    public void setWorkTimeInSecs(int workTimeInSecs) {
+        this.workTimeInSecs = workTimeInSecs;
+    }
+
+    public String getXmldata() {
+        return xmldata;
+    }
+
+    public void setXmldata(String xmldata) {
+        this.xmldata = xmldata;
+    }
+
+    public int getQueueident() {
+        return queueident;
+    }
+
+    public void setQueueident(int queueident) {
+        this.queueident = queueident;
+    }
+
+    public String getIdent() {
+        return ident;
+    }
+
+    public void setIdent(String ident) {
+        this.ident = ident;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getPreviousWorkTimeInSecs() {
+        return previousWorkTimeInSecs;
+    }
+
+    public void setPreviousWorkTimeInSecs(int previousWorkTimeInSecs) {
+        this.previousWorkTimeInSecs = previousWorkTimeInSecs;
+    }
+
+    public int getAttemptedWorkTimeInSecs() {
+        return attemptedWorkTimeInSecs;
+    }
+
+    public void setAttemptedWorkTimeInSecs(int attemptedWorkTimeInSecs) {
+        this.attemptedWorkTimeInSecs = attemptedWorkTimeInSecs;
+    }
+
+    public LocalDateTime getTransactionFinishTime() {
+        return transactionFinishTime;
+    }
+
+    public void setTransactionFinishTime(LocalDateTime transactionFinishTime) {
+        this.transactionFinishTime = transactionFinishTime;
+    }
+
+    public String getExceptionReason2() {
+        return exceptionReason2;
+    }
+
+    public void setExceptionReason2(String exceptionReason2) {
+        this.exceptionReason2 = exceptionReason2;
+    }
+
+    public String getExceptionTag() {
+        return exceptionTag;
+    }
+
+    public void setExceptionTag(String exceptionTag) {
+        this.exceptionTag = exceptionTag;
+    }
+
+    public String getEncryptionId() {
+        return encryptionId;
+    }
+
+    public void setEncryptionId(String encryptionId) {
+        this.encryptionId = encryptionId;
+    }
+
+    public LocalDateTime getLastTransactionUpdateTime() {
+        return lastTransactionUpdateTime;
+    }
+
+    public void setLastTransactionUpdateTime(LocalDateTime lastTransactionUpdateTime) {
+        this.lastTransactionUpdateTime = lastTransactionUpdateTime;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.reflectionToString(this);
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -358,8 +312,9 @@ public class FullTransDetails {
         }
         return true;
     }
-               
-        @Override public int hashCode() {
-                        return HashCodeBuilder.reflectionHashCode(this);
-        }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.processing.Completion;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api/v1/exception")
 @Api(value="Excepted Transaction Service", description="Operations related to exception transaction objects")

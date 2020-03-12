@@ -5,6 +5,7 @@ import com.principe.wcdash.domain.MinimalTrans;
 import com.principe.wcdash.domain.SummaryData;
 import com.principe.wcdash.domain.FullTransDetails;
 import com.principe.wcdash.service.DatabaseService;
+import com.principe.wcdash.service.DatabaseServiceImpl;
 import com.principe.wcdash.service.FilteringService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +20,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api/v1/complete")
 @Api(value="Transaction Service", description="Operations related to completed transaction objects")
@@ -27,7 +27,7 @@ import java.util.List;
 public class CompletionController {
 
         @Autowired
-        private DatabaseService databaseService;
+        private DatabaseServiceImpl databaseService;
 
         @Autowired
         private FilteringService filteringService;

@@ -52,7 +52,6 @@ public class SwaggerConfig {
                         .description("Serving data from Robotics transaction database for reporting purposes.")
                         .version("1.0.0")
                         .license(COPYRIGHT)
-
                         .build();
         }
 
@@ -63,7 +62,6 @@ public class SwaggerConfig {
         public Docket swaggerSpringfoxDocketApi() {
 
                 return new Docket(DocumentationType.SWAGGER_2)
-                        .groupName("UserOperations")
                         .apiInfo(swaggerApiInfo())
                         .directModelSubstitute(LocalDate.class, java.sql.Date.class)
                         .directModelSubstitute(LocalDateTime.class, java.util.Date.class)

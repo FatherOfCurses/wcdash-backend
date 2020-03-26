@@ -1,7 +1,7 @@
 package com.principe.wcdash.service;
 
 import com.principe.wcdash.domain.DateHandler;
-import com.principe.wcdash.domain.MinimalTrans;
+import com.principe.wcdash.domain.Transaction;
 import com.principe.wcdash.domain.SummaryData;
 import com.principe.wcdash.domain.TopTen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class FilteringService {
          *  3. Limit by date range,
          *  4. Return an ArrayList of MinimalTrans objects
          *
-         * @param minimalTransArray
+         * @param transactionArray
          * @param transactionRange
          * @param transactionType
          * @return List<MinimalTrans> returnDetailList
          */
 
         //TODO: Does it make more sense to allow each controller (or service) to build an ArrayList of a single type of transaction?
-        public List<MinimalTrans> listDateRangeTransactionDetail(List<MinimalTrans> minimalTransArray, DateHandler transactionRange, String transactionType) {
+        public List<Transaction> listDateRangeTransactionDetail(List<Transaction> transactionArray, DateHandler transactionRange, String transactionType) {
 
                 /**
                  *  In order to handle how lambdas handle a range, have to provide a date range that includes dates on either side of the range.
@@ -46,7 +46,7 @@ public class FilteringService {
                  *  Filtering transaction will then return dates *after* 2018-09-20 and *before* 2018-09-26
                  *
                  */
-                List <MinimalTrans> returnDetailList = minimalTransArray.stream()
+                List <Transaction> returnDetailList = transactionArray.stream()
                         .filter(x -> (x.getStatustext().equals(transactionType)))
                         .filter(x -> (x.getTransactionCompleteTime().toLocalDate().isAfter(transactionRange.getAfterStartDate())))
                         .filter(x -> (x.getTransactionCompleteTime().toLocalDate().isBefore(transactionRange.getBeforeEndDate())))
@@ -67,11 +67,11 @@ public class FilteringService {
          * 7. Add the SummaryData object to the ArrayList
          * 8. Return the ArrayList of SummaryData objects
          *
-         * @param minimalTransDetail
+         * @param transactionDetail
          * @param transactionRange
          * @return List<SummaryData> returnSummaryList
          */
-        public List<SummaryData> listDateRangeTransactionSummary(List<MinimalTrans> minimalTransDetail, DateHandler transactionRange) {
+        public List<SummaryData> listDateRangeTransactionSummary(List<Transaction> transactionDetail, DateHandler transactionRange) {
                 Map<LocalDate, Integer> totalTransForDate = DateRangeTransactionCount(transactionRange);
                 int numberOfDays = transactionRange.getNumberOfDays();
                 List<SummaryData> returnSummaryList = new ArrayList<>();
@@ -84,9 +84,9 @@ public class FilteringService {
                         LocalDate currentDateinDataset = transactionRange.getStartDateRange().plusDays(longDate);
                         singleDaySummary[i].setSummaryDate(currentDateinDataset);
                         try {
-                                averageHandleTime[i] = minimalTransDetail.stream().filter(y -> (y.getTransactionCompleteTime().toLocalDate()).isEqual(currentDateinDataset)).collect(Collectors.averagingInt(MinimalTrans::getWorkTimeInSecs));
+                                averageHandleTime[i] = transactionDetail.stream().filter(y -> (y.getTransactionCompleteTime().toLocalDate()).isEqual(currentDateinDataset)).collect(Collectors.averagingInt(Transaction::getWorkTimeInSecs));
                                 singleDaySummary[i].setDailyAverageWorkTime((long) averageHandleTime[i]);
-                                transactionCount[i] = minimalTransDetail.stream().filter(y -> (y.getTransactionCompleteTime().toLocalDate()).isEqual(currentDateinDataset)).count();
+                                transactionCount[i] = transactionDetail.stream().filter(y -> (y.getTransactionCompleteTime().toLocalDate()).isEqual(currentDateinDataset)).count();
                                 singleDaySummary[i].setNumberOfTransactions(transactionCount[i]);
                                 if (transactionCount[i] != 0) {
                                         double transactionTypeCount = transactionCount[i];
@@ -127,7 +127,7 @@ public class FilteringService {
          * @return List<TopTen>returnList
          */
 
-        public List<TopTen> topTenExceptionList(List<MinimalTrans> arrayToProcess) {
+        public List<TopTen> topTenExceptionList(List<Transaction> arrayToProcess) {
                 /**
                  * 1. Take the provided arrayList
                  * 2. Filter group to only include exceptions.
@@ -137,8 +137,8 @@ public class FilteringService {
                  */
                 Map<String, Long> topTenList = arrayToProcess.stream()
                         .filter(x -> (x.getStatustext().equals("Exception")))
-                        .sorted(Comparator.comparing(MinimalTrans::getExceptionReason2))
-                        .collect(Collectors.groupingBy(MinimalTrans::getExceptionReason2, Collectors.counting()));
+                        .sorted(Comparator.comparing(Transaction::getExceptionReason2))
+                        .collect(Collectors.groupingBy(Transaction::getExceptionReason2, Collectors.counting()));
                 /**
                  * Prepare arrays of variables for iterating through Map
                  * and converting to a list.
@@ -188,9 +188,9 @@ public class FilteringService {
         }
 
         Map<LocalDate, Integer> DateRangeTransactionCount(DateHandler transactionRange) {
-                List<MinimalTrans> fullCountDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> fullCountDataset = databaseService.listAllMinimalTrans();
                 // TODO: Strip logging once debugged
-                for(MinimalTrans oneTrans: fullCountDataset) {
+                for(Transaction oneTrans: fullCountDataset) {
                         System.out.println("One object row");
                         System.out.println(oneTrans.getTransactionCompleteTime());
                         System.out.println(oneTrans.getStatustext());
@@ -200,12 +200,12 @@ public class FilteringService {
                         System.out.println(oneTrans.getXmldata());
                         System.out.println(oneTrans.getExceptionReason2());
                 }
-                List <MinimalTrans> returnDetailList = fullCountDataset.stream()
+                List <Transaction> returnDetailList = fullCountDataset.stream()
                         .filter(x -> (x.getTransactionCompleteTime().toLocalDate().isAfter(transactionRange.getAfterStartDate())))
                         .filter(x -> (x.getTransactionCompleteTime().toLocalDate().isBefore(transactionRange.getBeforeEndDate())))
                         .collect(Collectors.toList());
                 Map<LocalDate, Integer> currentDateCount = new HashMap<>();
-                for(MinimalTrans oneDay : returnDetailList){
+                for(Transaction oneDay : returnDetailList){
                         LocalDate currentDateinDataset = oneDay.getTransactionCompleteTime().toLocalDate();
                         currentDateCount.put(
                                 // key

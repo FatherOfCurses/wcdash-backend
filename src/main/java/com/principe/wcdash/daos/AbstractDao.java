@@ -22,6 +22,7 @@ public abstract class AbstractDao {
     protected final String TRANSACTION_DATABASE;
     protected MongoDatabase db;
     protected MongoClient mongoClient;
+
     protected AbstractDao(MongoClient mongoClient, String databaseName) {
         this.mongoClient = mongoClient;
         TRANSACTION_DATABASE = databaseName;
@@ -33,6 +34,8 @@ public abstract class AbstractDao {
     }
 
     public Map<String, Object> getConfiguration() {
+        // @Value("${spring.mongodb.uri}")
+        String connectionString = "mongodb+srv://transpojouser:vm0FcX12m1EvOply@transpojo-axfdc.mongodb.net/test?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
         ConnectionString connString = new ConnectionString(connectionString);
         Bson command = new Document("connectionStatus", 1);
         Document connectionStatus = this.mongoClient.getDatabase(TRANSACTION_DATABASE).runCommand(command);
@@ -43,7 +46,7 @@ public abstract class AbstractDao {
         Map<String, Object> configuration = new HashMap<>();
 
         if (!authUserRoles.isEmpty()) {
-            configuration.put("role", ((Document)authUserRoles.get(0)).getString(
+            configuration.put("role", ((Document) authUserRoles.get(0)).getString(
                     "role"));
             configuration.put("pool_size", connString.getMaxConnectionPoolSize());
             configuration.put(
@@ -55,5 +58,5 @@ public abstract class AbstractDao {
         }
         return configuration;
     }
-
 }
+

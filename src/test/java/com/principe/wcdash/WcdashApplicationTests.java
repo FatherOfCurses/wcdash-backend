@@ -1,8 +1,7 @@
 package com.principe.wcdash;
 
-import com.principe.wcdash.domain.FullTransDetails;
-import com.principe.wcdash.domain.MinimalTrans;
-import com.principe.wcdash.service.DatabaseService;
+import com.principe.wcdash.domain.Transaction;
+import com.principe.wcdash.service.DatabaseServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,47 +19,25 @@ import static org.junit.Assert.assertEquals;
 public class WcdashApplicationTests {
 
         @Autowired
-        private DatabaseService databaseService;
+        DatabaseServiceImpl databaseService;
 
         //TODO: More test coverage on transaction retrieval
-        @Test
-        public void ICanRetrieveASingleTransactionFromDatabase() {
-                FullTransDetails expectedTrans = TestHelper.createTrans(1);
-                databaseService.writeTransToDatabase(expectedTrans);
-                FullTransDetails actualTrans = new FullTransDetails();
-                actualTrans = databaseService.getTrans("5856E79D-88F4-428B-B328-004136CE750F1");
-                assertEquals(expectedTrans, actualTrans);
-        }
 
         @Test
-        public void ICanRetrieveAllTransactionsFromDatabase() {
-                ArrayList<FullTransDetails> expectedTransArray = new ArrayList<>();
-                ArrayList<FullTransDetails> actualTransArray = new ArrayList<>();
-                for(int i = 0 ; i < 5; i ++) {
-                        FullTransDetails thisTrans = TestHelper.createTrans(i);
-                        databaseService.writeTransToDatabase(thisTrans);
-                        expectedTransArray.add(thisTrans);
-                }
-                for(int j = 0 ; j < 5; j++) {
-                        actualTransArray.add(databaseService.getTrans("5856E79D-88F4-428B-B328-004136CE750F" + j));
-                }
-                assertEquals(expectedTransArray, actualTransArray);
-        }
-        @Test
         public void ICanRetrieveASingleMinimalTransactionFromDatabase() {
-                MinimalTrans expectedMinimal = TestHelper.createMinimalTrans(1);
+                Transaction expectedMinimal = TestHelper.createMinimalTrans(1);
                 databaseService.writeMinimalTransToDatabase(expectedMinimal);
-                MinimalTrans actualMinimal = new MinimalTrans();
+                Transaction actualMinimal = new Transaction();
                 actualMinimal = databaseService.getMinimalTrans("5856E79D-88F4-428B-B328-004136CE750F1");
                 assertEquals(expectedMinimal, actualMinimal);
         }
 
         @Test
         public void ICanRetrieveAllMinimalTransactionsFromDatabase() {
-                ArrayList<MinimalTrans> expectedMinimalArray = new ArrayList<>();
-                ArrayList<MinimalTrans> actualMinimalArray = new ArrayList<>();
+                ArrayList<Transaction> expectedMinimalArray = new ArrayList<>();
+                ArrayList<Transaction> actualMinimalArray = new ArrayList<>();
                 for(int i = 0 ; i < 5; i ++) {
-                        MinimalTrans thisMinimal = TestHelper.createMinimalTrans(i);
+                        Transaction thisMinimal = TestHelper.createMinimalTrans(i);
                         databaseService.writeMinimalTransToDatabase(thisMinimal);
                         expectedMinimalArray.add(thisMinimal);
                 }

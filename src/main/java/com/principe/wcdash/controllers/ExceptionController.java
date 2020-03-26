@@ -1,7 +1,7 @@
 package com.principe.wcdash.controllers;
 
 import com.principe.wcdash.domain.DateHandler;
-import com.principe.wcdash.domain.MinimalTrans;
+import com.principe.wcdash.domain.Transaction;
 import com.principe.wcdash.domain.SummaryData;
 import com.principe.wcdash.service.DatabaseService;
 import com.principe.wcdash.service.FilteringService;
@@ -43,8 +43,8 @@ public class ExceptionController {
         @GetMapping(value = "/summary", produces = MediaType.APPLICATION_JSON_VALUE)
         public List<SummaryData> averageDailyTransactionTime(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<MinimalTrans> fullDataset = databaseService.listAllMinimalTrans();
-                List<MinimalTrans> transactionDaySummary = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
+                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> transactionDaySummary = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
                 return filteringService.listDateRangeTransactionSummary(transactionDaySummary, transactionRange);
         }
 
@@ -62,9 +62,9 @@ public class ExceptionController {
 
         //TODO: Parameterize request to allow for specification of date range
         @GetMapping(value = "/detail", produces = MediaType.APPLICATION_JSON_VALUE)
-        public List<MinimalTrans> last5DaysCompletions(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        public List<Transaction> last5DaysCompletions(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<MinimalTrans> fullDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
                 return filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
         }
         //TODO: Provide a download service?

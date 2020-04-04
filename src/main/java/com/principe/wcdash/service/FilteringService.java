@@ -188,7 +188,7 @@ public class FilteringService {
         }
 
         Map<LocalDate, Integer> DateRangeTransactionCount(DateHandler transactionRange) {
-                List<Transaction> fullCountDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> fullCountDataset = databaseService.listAllTrans();
                 // TODO: Strip logging once debugged
                 for(Transaction oneTrans: fullCountDataset) {
                         System.out.println("One object row");

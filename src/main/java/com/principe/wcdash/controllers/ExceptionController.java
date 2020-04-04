@@ -27,6 +27,8 @@ public class ExceptionController {
         @Autowired
         private FilteringService filteringService;
 
+        List<Transaction> fullDataset = databaseService.listAllTrans();
+
         /*
 
        Get summary data for five days of completed transactions (Date and AHT)
@@ -43,7 +45,6 @@ public class ExceptionController {
         @GetMapping(value = "/summary", produces = MediaType.APPLICATION_JSON_VALUE)
         public List<SummaryData> averageDailyTransactionTime(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
                 List<Transaction> transactionDaySummary = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
                 return filteringService.listDateRangeTransactionSummary(transactionDaySummary, transactionRange);
         }
@@ -64,7 +65,6 @@ public class ExceptionController {
         @GetMapping(value = "/detail", produces = MediaType.APPLICATION_JSON_VALUE)
         public List<Transaction> last5DaysCompletions(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
                 return filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
         }
         //TODO: Provide a download service?

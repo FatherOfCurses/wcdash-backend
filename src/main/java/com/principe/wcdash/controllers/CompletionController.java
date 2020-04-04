@@ -31,6 +31,8 @@ public class CompletionController {
                 this.filteringService = filteringService;
         }
 
+        List<Transaction> fullDataset = databaseService.listAllTrans();
+
         /*
 
         Get summary data for five days of completed transactions (Date and AHT)
@@ -48,7 +50,6 @@ public class CompletionController {
         public List<SummaryData> averageDailyTransactionTime(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
                 System.out.println("I just got asked for " + startDate + ", " + endDate + " from completionsummary.  That should be " + transactionRange.getNumberOfDays() + " days.");
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
                 List<Transaction> transactionDaySummary = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Completed");
                 return filteringService.listDateRangeTransactionSummary(transactionDaySummary, transactionRange);
         }
@@ -70,7 +71,6 @@ public class CompletionController {
         public List<Transaction> dateRangeCompletionDetail(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
                 System.out.println("I just got asked for " + startDate + ", " + endDate + " from completionDetail" );
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
                 return filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Completed");
         }
         //TODO: Provide a download service?

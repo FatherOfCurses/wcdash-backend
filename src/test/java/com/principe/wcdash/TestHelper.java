@@ -6,15 +6,15 @@ import java.time.LocalDateTime;
 
 public class TestHelper {
 
-        public static Transaction createMinimalTrans(int transIndex) {
-                Transaction newMinimal = new Transaction();
-                newMinimal.setTransIdFromDB("5856E79D-88F4-428B-B328-004136CE750F" + transIndex);
-                newMinimal.setClaimnumber("WC116-A52881");
-                newMinimal.setStatustext("Completed");
-                newMinimal.setTransactionCompleteTime(LocalDateTime.parse("2018-06-26T11:13:31.690"));
-                newMinimal.setExceptionReason2("exceptionreason2");
-                newMinimal.setWorkTimeInSecs(513);
-                newMinimal.setXmldata("stupidxmltext");
-                return newMinimal;
+        public static Transaction createTrans(int transIndex) {
+                Transaction trans = new Transaction();
+                trans.setTransIdFromDB("5856E79D-88F4-428B-B328-004136CE750F" + transIndex);
+                trans.setClaimnumber("WC116-A52881");
+                trans.setStatustext("Completed");
+                trans.setTransactionCompleteTime(LocalDateTime.parse("2018-06-26T11:13:31.690"));
+                trans.setExceptionReason2("exceptionreason2");
+                trans.setWorkTimeInSecs(513);
+                trans.setXmldata("stupidxmltext");
+                return trans;
         }
 }

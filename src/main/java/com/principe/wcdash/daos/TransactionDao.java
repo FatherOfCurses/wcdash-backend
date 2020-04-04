@@ -18,15 +18,15 @@ import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
 
 @Component("completionDao")
-public class CompletionDao extends AbstractDao {
+public class TransactionDao extends AbstractDao {
 
     @Value("${spring.mongodb.database}")
     //public static String TRANSACTION_COLLECTION;
-    public static String TRANSACTION_COLLECTION = "transaction";
+    public String TRANSACTION_COLLECTION = "transaction";
     private MongoCollection<Document> completionCollection;
 
     @Autowired
-    public CompletionDao(
+    public TransactionDao(
             MongoClient mongoClient, @Value("${spring.mongodb.database}") String databaseName) {
         super(mongoClient, databaseName);
         completionCollection = db.getCollection(TRANSACTION_COLLECTION);

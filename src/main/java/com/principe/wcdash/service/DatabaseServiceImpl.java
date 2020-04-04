@@ -1,7 +1,7 @@
 package com.principe.wcdash.service;
 
 import com.principe.wcdash.domain.Transaction;
-import com.principe.wcdash.daos.CompletionDao;
+import com.principe.wcdash.daos.TransactionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 public class DatabaseServiceImpl implements DatabaseService {
 
     @Autowired
-    CompletionDao completionDao;
+    TransactionDao completionDao;
 
     @Override
-    public Transaction getMinimalTrans(String transIdFromDB) {
+    public Transaction getTrans(String transIdFromDB) {
         return completionDao.findById(transIdFromDB);
     }
 
     @Override
-    public List<Transaction> listAllMinimalTrans() {
+    public List<Transaction> listAllTrans() {
         completionDao.findAll();
         List<Transaction> scrubbedList = (completionDao.findAll()).stream()
                 .filter(x -> x.getStatustext() != "")
@@ -29,7 +29,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public void writeMinimalTransToDatabase(Transaction writeMinimal) {
+    public void writeTransToDatabase(Transaction writeMinimal) {
         completionDao.save(writeMinimal);
     }
 

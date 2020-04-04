@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface DatabaseService {
 
-        Transaction getMinimalTrans(String transIdFromDB);
-        List<Transaction> listAllMinimalTrans();
-        void writeMinimalTransToDatabase(Transaction writeMinimal);
+        Transaction getTrans(String transIdFromDB);
+        List<Transaction> listAllTrans();
+        void writeTransToDatabase(Transaction writeMinimal);
 }

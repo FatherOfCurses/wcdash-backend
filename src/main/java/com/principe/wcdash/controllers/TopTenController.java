@@ -45,7 +45,7 @@ public class TopTenController {
         public List<TopTen> topTenExceptionReasons(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 System.out.println("I just got asked for " + startDate + ", " + endDate + " from exceptionreason" );
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> fullDataset = databaseService.listAllTrans();
                 List<Transaction> dateSelectedList = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
                 return filteringService.topTenExceptionList(dateSelectedList);
         }
@@ -64,7 +64,7 @@ public class TopTenController {
         @GetMapping(value = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
         public List<TopTen> topTenExceptionCustomers(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
                 DateHandler transactionRange = filteringService.calculateDateRange(startDate, endDate);
-                List<Transaction> fullDataset = databaseService.listAllMinimalTrans();
+                List<Transaction> fullDataset = databaseService.listAllTrans();
                 List<Transaction> dateSelectedList = filteringService.listDateRangeTransactionDetail(fullDataset, transactionRange, "Exception");
                 return filteringService.topTenExceptionList(dateSelectedList);
         }

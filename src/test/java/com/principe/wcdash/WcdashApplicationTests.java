@@ -24,27 +24,27 @@ public class WcdashApplicationTests {
         //TODO: More test coverage on transaction retrieval
 
         @Test
-        public void ICanRetrieveASingleMinimalTransactionFromDatabase() {
-                Transaction expectedMinimal = TestHelper.createMinimalTrans(1);
-                databaseService.writeMinimalTransToDatabase(expectedMinimal);
-                Transaction actualMinimal = new Transaction();
-                actualMinimal = databaseService.getMinimalTrans("5856E79D-88F4-428B-B328-004136CE750F1");
-                assertEquals(expectedMinimal, actualMinimal);
+        public void ICanRetrieveASingleTransactionFromDatabase() {
+                Transaction trans = TestHelper.createTrans(1);
+                    databaseService.writeTransToDatabase(trans);
+                Transaction actualTrans = new Transaction();
+                actualTrans = databaseService.getTrans("5856E79D-88F4-428B-B328-004136CE750F1");
+                assertEquals(trans, actualTrans);
         }
 
         @Test
-        public void ICanRetrieveAllMinimalTransactionsFromDatabase() {
-                ArrayList<Transaction> expectedMinimalArray = new ArrayList<>();
-                ArrayList<Transaction> actualMinimalArray = new ArrayList<>();
+        public void ICanRetrieveAllTransactionsFromDatabase() {
+                ArrayList<Transaction> expectedTransArray = new ArrayList<>();
+                ArrayList<Transaction> actualTransArray = new ArrayList<>();
                 for(int i = 0 ; i < 5; i ++) {
-                        Transaction thisMinimal = TestHelper.createMinimalTrans(i);
-                        databaseService.writeMinimalTransToDatabase(thisMinimal);
-                        expectedMinimalArray.add(thisMinimal);
+                        Transaction thisTrans = TestHelper.createTrans(i);
+                        databaseService.writeTransToDatabase(thisTrans);
+                        expectedTransArray.add(thisTrans);
                 }
                 for(int j = 0 ; j < 5; j++) {
-                        actualMinimalArray.add(databaseService.getMinimalTrans("5856E79D-88F4-428B-B328-004136CE750F" + j));
+                        actualTransArray.add(databaseService.getTrans("5856E79D-88F4-428B-B328-004136CE750F" + j));
                 }
-                assertEquals(expectedMinimalArray, actualMinimalArray);
+                assertEquals(expectedTransArray, actualTransArray);
         }
 }
 

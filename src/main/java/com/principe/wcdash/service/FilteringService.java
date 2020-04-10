@@ -14,12 +14,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 import static java.lang.Math.toIntExact;
 
-
-@Service
 public class FilteringService {
 
         @Autowired
         private DatabaseService databaseService;
+
+        public FilteringService() {
+        }
+
         /**
          *  Operation:
          *  1. Take an ArrayList of MinimalTrans objects
@@ -32,6 +34,7 @@ public class FilteringService {
          * @param transactionType
          * @return List<MinimalTrans> returnDetailList
          */
+
 
         //TODO: Does it make more sense to allow each controller (or service) to build an ArrayList of a single type of transaction?
         public List<Transaction> listDateRangeTransactionDetail(List<Transaction> transactionArray, DateHandler transactionRange, String transactionType) {

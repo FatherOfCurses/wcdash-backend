@@ -5,9 +5,6 @@ import com.mongodb.client.MongoCollection;
 import com.principe.wcdash.domain.Transaction;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,19 +14,19 @@ import java.util.List;
 import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
 
-@Component("completionDao")
 public class TransactionDao extends AbstractDao {
 
-    @Value("${spring.mongodb.database}")
-    //public static String TRANSACTION_COLLECTION;
     public String TRANSACTION_COLLECTION = "transaction";
     private MongoCollection<Document> completionCollection;
 
-    @Autowired
-    public TransactionDao(
-            MongoClient mongoClient, @Value("${spring.mongodb.database}") String databaseName) {
+    private TransactionDao(
+            MongoClient mongoClient, String databaseName) {
         super(mongoClient, databaseName);
         completionCollection = db.getCollection(TRANSACTION_COLLECTION);
+    }
+
+    public static TransactionDao create(MongoClient mongoClient, String databaseName){
+        return new TransactionDao(mongoClient, databaseName);
     }
 
     public Transaction findById(String transIdFromDB) {
@@ -74,5 +71,10 @@ public class TransactionDao extends AbstractDao {
         Document transDocument = new Document();
         return transDocument;
     }
+
+    public void instancedDao() {
+        System.out.println("Hey, I instantiated!");
+    }
+
 
 }

@@ -3,26 +3,29 @@ package com.principe.wcdash.service;
 import com.principe.wcdash.domain.Transaction;
 import com.principe.wcdash.daos.TransactionDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+
 public class DatabaseServiceImpl implements DatabaseService {
 
     @Autowired
-    TransactionDao completionDao;
+    TransactionDao transactionDao;
+
+    public DatabaseServiceImpl() {
+        System.out.println("Hey I impled");
+    }
 
     @Override
     public Transaction getTrans(String transIdFromDB) {
-        return completionDao.findById(transIdFromDB);
+        return transactionDao.findById(transIdFromDB);
     }
 
     @Override
     public List<Transaction> listAllTrans() {
-        completionDao.findAll();
-        List<Transaction> scrubbedList = (completionDao.findAll()).stream()
+        transactionDao.findAll();
+        List<Transaction> scrubbedList = (transactionDao.findAll()).stream()
                 .filter(x -> x.getStatustext() != "")
                 .collect(Collectors.toList());
         return scrubbedList;
@@ -30,7 +33,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public void writeTransToDatabase(Transaction writeMinimal) {
-        completionDao.save(writeMinimal);
+        transactionDao.save(writeMinimal);
     }
 
 }

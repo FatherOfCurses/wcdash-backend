@@ -2,7 +2,6 @@ package com.principe.wcdash;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.principe.wcdash.config.MongoDBConfiguration;
 import com.principe.wcdash.daos.TransactionDao;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootTest(classes = {MongoDBConfiguration.class})
+@SpringBootTest
 @EnableConfigurationProperties
 @EnableAutoConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,7 +36,7 @@ public class MongoConnectionTests extends TicketTest {
     @Before
     public void setup() throws IOException {
         mongoUri = getProperty("spring.mongodb.uri");
-        this.dao = new TransactionDao(mongoClient, databaseName);
+        this.dao = TransactionDao.create(mongoClient, databaseName);
     }
 
     @Test
